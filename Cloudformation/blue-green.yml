@@ -91,7 +91,7 @@ Resources:
           Value: Example
       TargetType: ip
       UnhealthyThresholdCount: 4
-      VpcId: !Ref Vpc
+      VpcId: !Ref VPC
   ALBTargetGroupGreen:
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     Properties:
@@ -110,7 +110,7 @@ Resources:
           Value: Example
       TargetType: ip
       UnhealthyThresholdCount: 4
-      VpcId: !Ref Vpc
+      VpcId: !Ref VPC
   ExampleALB:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
@@ -216,7 +216,7 @@ Resources:
       Service: !Ref ECSDemoService
       TaskDefinition: !Ref BlueTaskDefinition
       LoadBalancers:
-        - ContainerName: DemoApp
+        - ContainerName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
           ContainerPort: 80
           TargetGroupArn: !Ref ALBTargetGroupBlue
   PrimaryTaskSet:
