@@ -4,7 +4,7 @@ Parameters:
 
   ImageURI:
     Type: String
-Transform:\
+Transform:
   - 'AWS::CodeDeployBlueGreen'
 Hooks:
   CodeDeployBlueGreenHook:
