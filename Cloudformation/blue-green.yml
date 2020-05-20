@@ -4,7 +4,7 @@ Parameters:
 
   ImageURI:
     Type: String
-Transform:
+Transform:\
   - 'AWS::CodeDeployBlueGreen'
 Hooks:
   CodeDeployBlueGreenHook:
@@ -59,7 +59,7 @@ Resources:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
       GroupDescription: Security group for ec2 access
-      VpcId: !Ref Vpc
+      VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: '80'
