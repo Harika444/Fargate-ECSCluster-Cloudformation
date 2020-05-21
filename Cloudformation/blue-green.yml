@@ -30,6 +30,8 @@ Hooks:
                 - ALBTargetGroupGreen
     Type: 'AWS::CodeDeploy::BlueGreen'
 Resources:
+
+
   # Create a VPC
   VPC:
     Type: AWS::EC2::VPC
@@ -37,6 +39,39 @@ Resources:
       CidrBlock: 172.10.0.0/16
       EnableDnsHostnames: True
       EnableDnsSupport: True
+      
+# VpcInternetGateway: Internet gateway for the VPC
+
+  VpcInternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+# VpcInternetGatewayAttachment - attach the internet gateway to the VPC
+# Note that several resources have a "DependsOn" key for this
+# attachment (e.g. routes, EC2, etc.) to inform CloudFormation of the
+# relationship.
+                  
+  VpcInternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref VpcInternetGateway
+      VpcId: !Ref VPC
+      
+  VpcRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+# DefaultRoute - Add the default route to the Internet gateway.  The
+# gateway must be attached to the VPC before this can be done, hence
+# the "DependsOn" key.
+
+  DefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VpcInternetGatewayAttachment
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref VpcInternetGateway
+      RouteTableId: !Ref VpcRouteTable
 
   # Create a Subnet
   Subnet1:
