@@ -98,7 +98,8 @@ Resources:
   # Create a TaskDefinition with container details
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
-    Properties: 
+    Properties:
+      Family: sample-fargate
       Memory: 1024
       Cpu: 512
       NetworkMode: awsvpc
