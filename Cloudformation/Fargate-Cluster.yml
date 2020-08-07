@@ -114,8 +114,7 @@ Resources:
             - ContainerPort: !Ref ContainerPort
               HostPort: !Ref ContainerPort
           HealthCheck:
-            - Command: 
-                - [ "CMD-SHELL", "curl -f http://localhost/harika || exit 1" ]
+              Command: [ "CMD-SHELL", "curl -f http://localhost/harika || exit 1" ] 
               Interval: 5
               Retries: 1
               StartPeriod: 1
