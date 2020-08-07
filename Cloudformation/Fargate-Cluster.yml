@@ -109,7 +109,6 @@ Resources:
       ExecutionRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
         - Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
-          StartTimeout: 30
           Image: !Ref ImageURI
           PortMappings:
             - ContainerPort: !Ref ContainerPort
