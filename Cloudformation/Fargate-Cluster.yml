@@ -113,12 +113,6 @@ Resources:
           PortMappings:
             - ContainerPort: !Ref ContainerPort
               HostPort: !Ref ContainerPort
-          HealthCheck:
-              Command: [ "CMD-SHELL", "curl -f http://localhost/harika || exit 1" ] 
-              Interval: 5
-              Retries: 1
-              StartPeriod: 1
-              Timeout: 2
   # Creat a security group for load balancer and open port 80 in bound from internet
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -130,7 +124,6 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-
   # Creat a security group for Containers and open in bound Container port from Load balancer security group to the Container 
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
