@@ -24,6 +24,10 @@ phases:
       - docker push $ECR_REPOSITORY_URI:latest
       - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
       - printf '{"ImageURI":"%s:%s"}' $ECR_REPOSITORY_URI $IMAGE_TAG > imageDetail.json
+      - taskDefinitionArn=`aws ecs describe-services --cluster check-258102705540-Cluster --services check-258102705540-ECSService |  jq '.services[].deployments[].taskDefinition' | sed 's/"//g'`
+      - Previous_Version_ImageUrl=`aws ecs describe-task-definition --task-definition $taskDefinitionArn | jq '.taskDefinition.containerDefinitions[].image' | sed 's/"//g'`
+      - printf '{"ImageURI":"%s"}' $Previous_Version_ImageUrl > redeployImageDetail.json
 artifacts:
   files:
     - imageDetail.json
+    - redeployImageDetail.json
